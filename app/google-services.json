@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "452557222180",
+    "project_id": "preschool-node",
+    "storage_bucket": "preschool-node.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452557222180:android:f1faf0a3987e2036f803b1",
+        "android_client_info": {
+          "package_name": "com.example.wilsonpreschool"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW4KjdKWAG6-NqSGXA2w6_7JhpYdCFUzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452557222180:android:bc52aca6c5679607f803b1",
+        "android_client_info": {
+          "package_name": "com.lunix.appsekolah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW4KjdKWAG6-NqSGXA2w6_7JhpYdCFUzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452557222180:android:1f14bc8f62f15c29f803b1",
+        "android_client_info": {
+          "package_name": "lunix.appsekolah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW4KjdKWAG6-NqSGXA2w6_7JhpYdCFUzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

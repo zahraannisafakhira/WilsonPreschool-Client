@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MenuItemsStyle" parent="Widget.AppCompat.Light.PopupMenu">
+        <item name="android:textColor">@color/white</item> <!-- Replace @color/white with your desired color -->
+    </style>
+</resources>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    tools:context=".DetailActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="Detail Data"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="@color/Lavender"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/nameApp"
+        android:background="@drawable/lavender_border"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:hint="Name"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/Lavender"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/genderApp"
+        android:background="@drawable/lavender_border"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:hint="Gender"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/Lavender"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/birthApp"
+        android:background="@drawable/lavender_border"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:hint="Date of Birth"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/Lavender"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/addressApp"
+        android:background="@drawable/lavender_border"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:hint="Address"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/Lavender"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/pnameApp"
+        android:background="@drawable/lavender_border"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:hint="Parent's name"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/Lavender"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/hphoneApp"
+        android:background="@drawable/lavender_border"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:hint="Home Phone Number"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/Lavender"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/pphoneApp"
+        android:background="@drawable/lavender_border"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:hint="Parent's Phone Number"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/Lavender"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            app:menu_fab_size="normal"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            app:menu_colorPressed="@color/Lavender"
+            app:menu_colorNormal="@color/Lavender"
+            app:menu_icon="@drawable/baseline_format_list_bulleted_24"
+            app:menu_openDirection="up"
+            app:menu_showShadow="true">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editButton"
+                android:src="@drawable/baseline_edit_24"
+                app:fab_showShadow="true"
+                app:fab_colorNormal="@color/green"
+                app:fab_size="mini"/>
+
+            <com.github.clans.fab.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/deleteButton"
+                android:src="@drawable/baseline_delete_24"
+                app:fab_showShadow="true"
+                app:fab_colorNormal="@color/red"
+                app:fab_size="mini"/>
+
+        </com.github.clans.fab.FloatingActionMenu>
+
+    </RelativeLayout>
+
+</LinearLayout>
