@@ -59,6 +59,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.github.clans:fab:1.6.4")
     implementation("com.google.firebase:firebase-storage:21.0.0")
+    implementation("com.firebaseui:firebase-ui-firestore:8.0.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

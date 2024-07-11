@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -21,14 +20,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -45,20 +44,18 @@ public class RegistrationFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private applicantsAdapter adapter;
-    private DatabaseReference mbase;
-    String[] items = {"Male", "Female"};
-    AutoCompleteTextView autoCompleteTxt;
-    ArrayAdapter<String> adapterItems;
+    private String[] items = {"Male", "Female"};
+    private AutoCompleteTextView autoCompleteTxt;
+    private ArrayAdapter<String> adapterItems;
 
     private EditText mName, mGender, mBirthdate, mAddress, mParName, mHomPhone, mParPhone;
     private String selectedGender;
     private Button mSaveBtn;
     private ProgressDialog pd;
     private FirebaseFirestore db;
-    ImageView cal;
-    EditText dateTXT;
+    private CollectionReference applicantsRef;
+    private ImageView cal;
     private int mDate, mMonth, mYear;
-
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -76,7 +73,12 @@ public class RegistrationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mbase = FirebaseDatabase.getInstance().getReference().child("applicants");
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        db = FirebaseFirestore.getInstance();
+        applicantsRef = db.collection("applicants");
     }
 
     @Override
@@ -94,10 +96,12 @@ public class RegistrationFragment extends Fragment {
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        // Configure FirebaseRecyclerOptions and Adapter
-        FirebaseRecyclerOptions<applicants> options =
-                new FirebaseRecyclerOptions.Builder<applicants>()
-                        .setQuery(mbase, applicants.class)
+        // Configure FirestoreRecyclerOptions and Adapter
+        Query query = applicantsRef.orderBy("timestamp", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<applicants> options =
+                new FirestoreRecyclerOptions.Builder<applicants>()
+                        .setQuery(query, applicants.class)
                         .build();
 
         adapter = new applicantsAdapter(options);
@@ -121,19 +125,16 @@ public class RegistrationFragment extends Fragment {
                         String formattedDate = String.format("%02d/%02d/%d", date, month + 1, year);
                         mBirthdate.setText(formattedDate);
                     }
-                }, mYear,mMonth,mDate);
+                }, mYear, mMonth, mDate);
                 datePickerDialog.show();
             }
         });
-
 
         // Initialize Views
         TextInputLayout nameInputLayout = view.findViewById(R.id.textInputLayout1);
         mName = nameInputLayout.getEditText(); // Corrected
         TextInputLayout genderInputLayout = view.findViewById(R.id.textInputLayout2);
         mGender = genderInputLayout.getEditText(); // Corrected
-//        TextInputLayout birthdateInputLayout = view.findViewById(R.id.textInputLayout4);
-//        mBirthdate = birthdateInputLayout.getEditText();// Corrected
         TextInputLayout addressInputLayout = view.findViewById(R.id.textInputLayout5);
         mAddress = addressInputLayout.getEditText();
         TextInputLayout parnameInputLayout = view.findViewById(R.id.textInputLayout6);
@@ -152,23 +153,103 @@ public class RegistrationFragment extends Fragment {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = mName.getText().toString().trim();
-                String gender = selectedGender;
-                String birthdate = mBirthdate.getText().toString().trim();
-                String address = mAddress.getText().toString().trim();
-                String parentName = mParName.getText().toString().trim();
-                String homePhone = mHomPhone.getText().toString().trim();
-                String parentPhone = mParPhone.getText().toString().trim();
-                uploadData(name, gender, birthdate, address, parentName, homePhone, parentPhone);
+                if (!validateName() | !validateGender() | !validateBirthdate() | !validateAddress() | !validateParentName() | !validateHomePhone() | !validateParentPhone()) {
+                    // If any field is invalid, do not proceed with the upload
+                } else {
+                    // Proceed with upload if all fields are valid
+                    String name = mName.getText().toString().trim();
+                    String gender = selectedGender;
+                    String birthdate = mBirthdate.getText().toString().trim();
+                    String address = mAddress.getText().toString().trim();
+                    String parentName = mParName.getText().toString().trim();
+                    String homePhone = mHomPhone.getText().toString().trim();
+                    String parentPhone = mParPhone.getText().toString().trim();
+                    uploadData(name, gender, birthdate, address, parentName, homePhone, parentPhone);
+                }
             }
         });
 
         return view;
     }
 
-    // Method to upload data to Firestore and Realtime Database
+    private Boolean validateName() {
+        String val = mName.getText().toString();
+        if (val.isEmpty()) {
+            mName.setError("Name cannot be empty");
+            return false;
+        } else {
+            mName.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateGender() {
+        if (selectedGender == null || selectedGender.isEmpty()) {
+            autoCompleteTxt.setError("Gender must be selected");
+            return false;
+        } else {
+            autoCompleteTxt.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateBirthdate() {
+        String val = mBirthdate.getText().toString();
+        if (val.isEmpty()) {
+            mBirthdate.setError("Birthdate cannot be empty");
+            return false;
+        } else {
+            mBirthdate.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateAddress() {
+        String val = mAddress.getText().toString();
+        if (val.isEmpty()) {
+            mAddress.setError("Address cannot be empty");
+            return false;
+        } else {
+            mAddress.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateParentName() {
+        String val = mParName.getText().toString();
+        if (val.isEmpty()) {
+            mParName.setError("Parent's name cannot be empty");
+            return false;
+        } else {
+            mParName.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateHomePhone() {
+        String val = mHomPhone.getText().toString();
+        if (val.isEmpty()) {
+            mHomPhone.setError("Home phone cannot be empty");
+            return false;
+        } else {
+            mHomPhone.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateParentPhone() {
+        String val = mParPhone.getText().toString();
+        if (val.isEmpty()) {
+            mParPhone.setError("Parent's phone number cannot be empty");
+            return false;
+        } else {
+            mParPhone.setError(null);
+            return true;
+        }
+    }
+
     private void uploadData(String name, String gender, String birthdate, String address, String parentName, String homePhone, String parentPhone) {
-        pd.setTitle("Adding Data to Firestore");
+        pd.setTitle("Uploading");
         pd.show();
         final String id = UUID.randomUUID().toString();
 
@@ -180,6 +261,7 @@ public class RegistrationFragment extends Fragment {
         doc.put("parent", parentName);
         doc.put("phone", homePhone);
         doc.put("parentnum", parentPhone);
+        doc.put("timestamp", System.currentTimeMillis());
 
         // Add data to Firestore
         db.collection("applicants").document(id).set(doc)
@@ -190,25 +272,7 @@ public class RegistrationFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Uploaded...", Toast.LENGTH_SHORT).show();
                             clearForm();
-                            // Add data to Realtime Database to update the RecyclerView
-                            mbase.child(id).setValue(doc)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d("RegistrationFragment", "Data added to Realtime Database");
-                                                // Refresh the adapter to reflect new data
-                                                adapter.notifyDataSetChanged();
-                                                recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                                            }
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.e("RegistrationFragment", "Failed to add data to Realtime Database", e);
-                                        }
-                                    });
+                            adapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getActivity(), "Failed to upload data...", Toast.LENGTH_SHORT).show();
                         }
@@ -223,24 +287,24 @@ public class RegistrationFragment extends Fragment {
                 });
     }
 
-    // Method to clear form fields
     private void clearForm() {
         mName.setText("");
-        mGender.setText("");
+        autoCompleteTxt.setText(""); // Clear selected gender
         mBirthdate.setText("");
         mAddress.setText("");
         mParName.setText("");
         mHomPhone.setText("");
         mParPhone.setText("");
     }
+
     @Override
     public void onStart() {
         super.onStart();
         if (adapter != null) {
             adapter.startListening();
-            Log.d("BlogFragment", "Adapter started listening");
+            Log.d("RegistrationFragment", "Adapter started listening");
         } else {
-            Log.w("BlogFragment", "Adapter is null in onStart");
+            Log.w("RegistrationFragment", "Adapter is null in onStart");
         }
     }
 
@@ -249,9 +313,9 @@ public class RegistrationFragment extends Fragment {
         super.onStop();
         if (adapter != null) {
             adapter.stopListening();
-            Log.d("BlogFragment", "Adapter stopped listening");
+            Log.d("RegistrationFragment", "Adapter stopped listening");
         } else {
-            Log.w("BlogFragment", "Adapter is null in onStop");
+            Log.w("RegistrationFragment", "Adapter is null in onStop");
         }
     }
 }

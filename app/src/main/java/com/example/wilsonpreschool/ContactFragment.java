@@ -97,19 +97,69 @@ public class ContactFragment extends Fragment {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = mName.getText().toString().trim();
-                String email = mEmail.getText().toString().trim();
-                String subject = mSubject.getText().toString().trim();
-                String message = mMessage.getText().toString().trim();
-                uploadData(name, email, subject, message);
+                if (!validateName() | !validateEmail() | !validateSubject() | !validateMessage()) {
+                    // If any field is invalid, do not proceed with the upload
+                } else {
+                    // Proceed with upload if all fields are valid
+                    String name = mName.getText().toString().trim();
+                    String email = mEmail.getText().toString().trim();
+                    String subject = mSubject.getText().toString().trim();
+                    String message = mMessage.getText().toString().trim();
+                    uploadData(name, email, subject, message);
+                }
             }
         });
 
         return view;
     }
 
+    private Boolean validateName() {
+        String val = mName.getText().toString();
+        if (val.isEmpty()) {
+            mName.setError("Name cannot be empty");
+            return false;
+        } else {
+            mName.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateEmail() {
+        String val = mEmail.getText().toString();
+        if (val.isEmpty()) {
+            mEmail.setError("Email cannot be empty");
+            return false;
+        } else {
+            mEmail.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateSubject() {
+        String val = mSubject.getText().toString();
+        if (val.isEmpty()) {
+            mSubject.setError("Subject cannot be empty");
+            return false;
+        } else {
+            mSubject.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateMessage() {
+        String val = mMessage.getText().toString();
+        if (val.isEmpty()) {
+            mMessage.setError("Message cannot be empty");
+            return false;
+        } else {
+            mMessage.setError(null);
+            return true;
+        }
+    }
+
+
     private void uploadData(String name, String email, String subject, String message) {
-        pd.setTitle("Adding Data to Firestore");
+        pd.setTitle("Uploading");
         pd.show();
         String id = UUID.randomUUID().toString();
 

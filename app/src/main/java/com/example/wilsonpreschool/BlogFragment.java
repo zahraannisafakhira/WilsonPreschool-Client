@@ -16,16 +16,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.wilsonpreschool.comments;
-import com.example.wilsonpreschool.commentsAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,12 +33,12 @@ public class BlogFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private commentsAdapter adapter;
-    private DatabaseReference mbase;
+    private FirebaseFirestore db;
+    private CollectionReference commentsRef;
 
     private EditText mName, mEmail, mComment;
     private Button mSaveBtn;
     private ProgressDialog pd;
-    private FirebaseFirestore db;
 
     public BlogFragment() {
         // Required empty public constructor
@@ -49,7 +47,8 @@ public class BlogFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mbase = FirebaseDatabase.getInstance().getReference().child("comments");
+        db = FirebaseFirestore.getInstance();
+        commentsRef = db.collection("comments");
     }
 
     @Override
@@ -62,8 +61,11 @@ public class BlogFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        FirebaseRecyclerOptions<comments> options = new FirebaseRecyclerOptions.Builder<comments>()
-                .setQuery(mbase, comments.class)
+        // Set up FirestoreRecyclerOptions
+        Query query = commentsRef.orderBy("timestamp", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<comments> options = new FirestoreRecyclerOptions.Builder<comments>()
+                .setQuery(query, comments.class)
                 .build();
 
         adapter = new commentsAdapter(options);
@@ -73,11 +75,11 @@ public class BlogFragment extends Fragment {
 
         // Correctly set up the input fields and button
         TextInputLayout nameInputLayout = view.findViewById(R.id.textInputLayout1);
-        mName = nameInputLayout.getEditText(); // Corrected
+        mName = nameInputLayout.getEditText();
         TextInputLayout emailInputLayout = view.findViewById(R.id.textInputLayout2);
-        mEmail = emailInputLayout.getEditText(); // Corrected
+        mEmail = emailInputLayout.getEditText();
         TextInputLayout commentInputLayout = view.findViewById(R.id.textInputLayout4);
-        mComment = commentInputLayout.getEditText(); // Corrected
+        mComment = commentInputLayout.getEditText();
         mSaveBtn = view.findViewById(R.id.btnPost);
 
         pd = new ProgressDialog(getActivity());
@@ -86,18 +88,56 @@ public class BlogFragment extends Fragment {
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = mName.getText().toString().trim();
-                String email = mEmail.getText().toString().trim();
-                String comment = mComment.getText().toString().trim();
-                uploadData(name, email, comment);
+                if (!validateName() | !validateEmail() | !validateComment()) {
+                    // If any field is invalid, do not proceed with the upload
+                } else {
+                    // Proceed with upload if all fields are valid
+                    String name = mName.getText().toString().trim();
+                    String email = mEmail.getText().toString().trim();
+                    String comment = mComment.getText().toString().trim();
+                    uploadData(name, email, comment);
+                }
             }
         });
 
         return view;
     }
 
+    private Boolean validateName() {
+        String val = mName.getText().toString();
+        if (val.isEmpty()) {
+            mName.setError("Name cannot be empty");
+            return false;
+        } else {
+            mName.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateEmail() {
+        String val = mEmail.getText().toString();
+        if (val.isEmpty()) {
+            mEmail.setError("Email cannot be empty");
+            return false;
+        } else {
+            mEmail.setError(null);
+            return true;
+        }
+    }
+
+    private Boolean validateComment() {
+        String val = mComment.getText().toString();
+        if (val.isEmpty()) {
+            mComment.setError("Comment cannot be empty");
+            return false;
+        } else {
+            mComment.setError(null);
+            return true;
+        }
+    }
+
     private void uploadData(final String name, final String email, final String comment) {
-        pd.setTitle("Adding Data to Firestore");
+        pd.setTitle("Uploading");
         pd.show();
         final String id = UUID.randomUUID().toString();
 
@@ -105,6 +145,7 @@ public class BlogFragment extends Fragment {
         doc.put("name", name);
         doc.put("email", email);
         doc.put("comment", comment);
+        doc.put("timestamp", System.currentTimeMillis());
 
         db.collection("comments").document(id).set(doc)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -113,26 +154,6 @@ public class BlogFragment extends Fragment {
                         pd.dismiss();
                         Toast.makeText(getActivity(), "Uploaded...", Toast.LENGTH_SHORT).show();
                         clearForm();
-
-                        // Add data to Realtime Database to update the RecyclerView
-                        mbase.child(id).setValue(doc)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Log.d("BlogFragment", "Data added to Realtime Database");
-                                            // Refresh the adapter to reflect new data
-                                            adapter.notifyDataSetChanged();
-                                            recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                                        }
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.e("BlogFragment", "Failed to add data to Realtime Database", e);
-                                    }
-                                });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
