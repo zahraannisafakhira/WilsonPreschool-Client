@@ -35,7 +35,7 @@
             android:fontFamily="@font/poppinregular"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/uhy2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
             android:fontFamily="@font/poppinregular"
             android:text="There are three preschool programs."
             android:layout_marginTop="10dp"
-            android:textSize="15sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/first"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +85,7 @@
                         android:text="Daycare"
                         android:fontFamily="@font/poppinregular"
                         android:textStyle="bold"
+                        android:textSize="16sp"
                         android:layout_marginTop="10dp" />
 
                     <TextView
@@ -96,7 +97,7 @@
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/poppinregular"
                         android:textAlignment="center"
-                        android:text="Daycare program is designed for providing stimulation, interaction, routine and exploration opportunities for early motor, social, intellectual and moral development."
+                        android:text="Daycare program is designed for providing stimulation, interaction, routine and exploration opportunities."
                         android:textSize="15sp" />
 
                     <Button
@@ -144,6 +145,7 @@
                         android:text="Pre-Kindergarten"
                         android:fontFamily="@font/poppinregular"
                         android:textStyle="bold"
+                        android:textSize="16sp"
                         android:layout_marginTop="10dp" />
 
                     <TextView
@@ -155,7 +157,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:textAlignment="center"
-                        android:text="Pre-Kindergarten program is designed to provide opportunities for children to develop holistically."
+                        android:text="Pre-Kindergarten program is designed to provide opportunities for children to develop holistically and early motor skills."
                         android:textSize="15sp" />
 
                     <Button
@@ -164,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/prekindergarten2"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="13dp"
                         android:textAlignment="center"
                         android:text="See More"
                         android:textSize="15sp" />
@@ -214,7 +216,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:textAlignment="center"
-                        android:text="Pre-Kindergarten program is designed to provide opportunities for children to develop holistically."
+                        android:text="Kindergarten program is designed to foster academic growth and prepares children for a successful transition to elementary school."
                         android:textSize="15sp" />
 
                     <Button
@@ -223,7 +225,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/kindergarten2"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="13dp"
                         android:textAlignment="center"
                         android:text="See More"
                         android:textSize="15sp" />

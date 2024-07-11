@@ -13,7 +13,6 @@ import android.view.MenuItem;
 
 import androidx.appcompat.widget.Toolbar;  // Correct import
 
-import com.example.wilsonpreschool.AccountActivity;
 import com.example.wilsonpreschool.BlogFragment;
 import com.example.wilsonpreschool.ContactFragment;
 import com.example.wilsonpreschool.HomeFragment;
@@ -78,15 +77,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.account) {
-            Intent intent = new Intent(MainActivity.this, AccountActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.logout) {
+        if (id == R.id.logout) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            finish();  // Finish MainActivity to remove it from the back stack
+            finish();
             return true;
         } else {
             return super.onOptionsItemSelected(item);

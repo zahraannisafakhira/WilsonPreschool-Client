@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="5dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -42,7 +42,7 @@
             android:text="Programs"
             android:fontFamily="@font/poppinregular"
             android:layout_marginTop="10dp"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/uhy2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
             android:fontFamily="@font/poppinregular"
             android:text="There are three preschool programs."
             android:layout_marginTop="10dp"
-            android:textSize="15sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/first"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,6 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="Daycare"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         android:fontFamily="@font/poppinregular"
                         android:layout_marginTop="10dp" />
@@ -104,7 +105,7 @@
                         android:layout_marginTop="10dp"
                         android:textAlignment="center"
                         android:fontFamily="@font/poppinregular"
-                        android:text="Daycare program is designed for providing stimulation, interaction, routine and exploration opportunities for early motor, social, intellectual and moral development."
+                        android:text="Daycare program is designed for providing stimulation, interaction, routine and exploration opportunities."
                         android:textSize="15sp" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -141,6 +142,7 @@
                         android:fontFamily="@font/poppinregular"
                         android:textStyle="bold"
                         android:text="Pre-Kindergarten"
+                        android:textSize="16sp"
                         android:layout_marginTop="10dp" />
 
                     <TextView
@@ -152,8 +154,8 @@
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/poppinregular"
                         android:textAlignment="center"
-                        android:text="Pre-Kindergarten program is designed to provide opportunities for children to develop holistically."
-                        android:textSize="15sp" />
+                        android:text="Pre-Kindergarten program is designed to provide opportunities for children to develop holistically and early motor skills."
+                        android:textSize="15sp"/>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -189,18 +191,18 @@
                         android:text="Kindergarten"
                         android:fontFamily="@font/poppinregular"
                         android:textStyle="bold"
+                        android:textSize="16sp"
                         android:layout_marginTop="10dp" />
 
                     <TextView
                         android:id="@+id/kindergartenName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppinregular"
                         android:layout_below="@+id/kindergartenImage"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/poppinregular"
+                        android:text="Kindergarten program is designed to foster academic growth and prepares children for a successful transition to elementary school."
                         android:textAlignment="center"
-                        android:text="Pre-Kindergarten program is designed to provide opportunities for children to develop holistically."
                         android:textSize="15sp" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -214,7 +216,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppinregular"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/uhy4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -225,7 +227,7 @@
             android:layout_height="wrap_content"
             android:text="There are three preschool locations."
             android:layout_marginTop="10dp"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:fontFamily="@font/poppinregular"
             app:layout_constraintBottom_toTopOf="@+id/location"
             app:layout_constraintEnd_toEndOf="parent"
@@ -262,7 +264,7 @@
                         android:id="@+id/jakartaName"
                         android:text="Jakarta"
                         android:fontFamily="@font/poppinregular"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"
                         android:layout_below="@+id/jakartaImage"/>
@@ -294,7 +296,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/bandungName"
                         android:text="Bandung"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:fontFamily="@font/poppinregular"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"
@@ -327,7 +329,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/surabayaName"
                         android:text="Surabaya"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:fontFamily="@font/poppinregular"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"
@@ -352,7 +354,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppinregular"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/uhy6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -363,7 +365,7 @@
             android:layout_height="wrap_content"
             android:text="These are the preschool facilities."
             android:layout_marginTop="10dp"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:fontFamily="@font/poppinregular"
             app:layout_constraintBottom_toTopOf="@+id/facilities"
             app:layout_constraintEnd_toEndOf="parent"
@@ -399,7 +401,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/libraryName"
                         android:text="Library"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:fontFamily="@font/poppinregular"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"
@@ -431,8 +433,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/outdoorName"
-                        android:text="Outdoor Playground"
-                        android:textSize="13sp"
+                        android:text="Playground"
+                        android:textSize="14sp"
                         android:fontFamily="@font/poppinregular"
                         android:textAlignment="center"
                         android:layout_marginTop="10dp"
@@ -466,7 +468,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/cafetariaName"
                         android:text="Cafetaria"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:fontFamily="@font/poppinregular"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"

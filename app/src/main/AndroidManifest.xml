@@ -10,9 +10,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/logoo"
+        android:label="Wilson Preschool"
+        android:roundIcon="@drawable/logoo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Wilsonpreschool"
         tools:targetApi="31">
@@ -27,9 +27,6 @@
             android:exported="false" />
         <activity
             android:name=".UploadActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AccountActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
