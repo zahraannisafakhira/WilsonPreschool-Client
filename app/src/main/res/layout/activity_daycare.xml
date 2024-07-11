@@ -460,56 +460,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/saturday" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:id="@+id/footer"
-            android:orientation="horizontal"
-            android:layout_marginTop="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sat">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:cardElevation="20dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/footerNama"
-                        android:text="About us"
-                        android:fontFamily="@font/poppinregular"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:layout_marginTop="10dp"
-                        android:layout_centerHorizontal="true"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/footer2"
-                        android:fontFamily="@font/poppinregular"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"
-                        android:textSize="15sp"
-                        android:text="At Wilson Preschool, we believe in the power of early education to shape young minds and inspire a lifelong love for learning. For any inquiries or to schedule a visit, please don't hesitate to reach out to us."
-                        android:layout_marginTop="10dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_above="@+id/scroll"
-                        android:layout_below="@+id/footerNama"
-                        tools:ignore="NotSibling" />
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
